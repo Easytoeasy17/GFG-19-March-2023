@@ -1,0 +1,32 @@
+class Solution {
+    public static ArrayList<Integer> getDistinctDifference(int N, int[] A) {
+        // code here
+          ArrayList<Integer> ans = new ArrayList<>();
+
+        // store frequencies of all elements
+        HashMap<Integer, Integer> freq = new HashMap<>();
+        for (int x : A) {
+            freq.put(x, freq.getOrDefault(x, 0) + 1);
+        }
+
+        // HashSet, so that automatically uniques are stored
+        Set<Integer> leftUniques = new HashSet<>();
+        for (int x : A) {
+            // reduce frequncy, once encountered
+            freq.put(x, freq.get(x) - 1);
+
+            if (freq.get(x) == 0)
+                freq.remove(x);
+
+            // here freqs helps us to get the no. of uniques
+            // in the right
+            ans.add(leftUniques.size() - freq.keySet().size());
+
+            leftUniques.add(x);
+        }
+
+        return ans;
+
+    }
+}
+        
